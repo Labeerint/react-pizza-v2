@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function Sort( {sortType, setSortType}) {
     const [open, setOpen] = useState(false);
-    const sortList = [{name:'популярности', value: 'popularity'}, {name: 'цене', value: "price"}, {name: 'алфавиту', value: 'алфавиту'}];
+    const sortList = [{name:'популярности', value: 'rating'}, {name: 'цене', value: "price"}, {name: 'алфавиту', value: 'title'}];
 
     const onSelectSortType = (i) => {
         setSortType(i);
