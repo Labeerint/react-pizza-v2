@@ -3,6 +3,7 @@
 .categories {
   ul {
     display: flex;
+    flex-wrap: wrap;
 
     li {
       background-color: #f9f9f9;
@@ -13,6 +14,10 @@
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
       @include noselect();
+
+      @media (max-width: 1009px) {
+        margin-bottom: 20px;
+      }
 
       &:hover {
         background-color: darken(#f9f9f9, 2%);
@@ -29,3 +34,4 @@
     }
   }
 }
+
