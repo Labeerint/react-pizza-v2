@@ -4,17 +4,18 @@ import Categories from '../components/Categories';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 
-function Home() {
+function Home({searchValue, setSearchValue}) {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [sortType, setSortType] = useState({ name: 'популярности', value: 'popularity' });
     const [activeCategory, setActiveCategory] = React.useState(0);
     const category = activeCategory > 0 ? 'category=' + activeCategory : '';
+    const search = searchValue ? '&search=' + searchValue : ''
 
     useEffect(() => {
         setIsLoading(true);
         fetch(
-            `https://6293860b089f87a57ac1b955.mockapi.io/items?${category}&sortBy=${sortType.value}&order=desc`,
+            `https://6293860b089f87a57ac1b955.mockapi.io/items?${category}${search}&sortBy=${sortType.value}&order=desc`,
         )
             .then((res) => res.json())
             .then((res) => {
@@ -22,7 +23,7 @@ function Home() {
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, [sortType, activeCategory]);
+    }, [sortType, activeCategory, searchValue]);
 
     return (
         <>
