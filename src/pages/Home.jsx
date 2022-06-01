@@ -5,6 +5,7 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 function Home({searchValue, setSearchValue}) {
     const [items, setItems] = useState([]);
@@ -17,12 +18,11 @@ function Home({searchValue, setSearchValue}) {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(
+        axios.get(
             `https://6293860b089f87a57ac1b955.mockapi.io/items?page=${currentPage}&limit=9${category}${search}&sortBy=${sortType.value}&order=desc`,
         )
-            .then((res) => res.json())
             .then((res) => {
-                setItems(res);
+                setItems(res.data);
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
