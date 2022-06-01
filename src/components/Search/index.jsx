@@ -1,7 +1,28 @@
-import React from 'react';
+import debounce from 'lodash.debounce';
+import React, { useCallback, useRef, useState } from 'react';
 import styles from './Search.module.scss';
 
-function Search({ searchValue, setSearchValue }) {
+function Search({ setSearchValue }) {
+    const [currentValue, setCurrentValue] = useState('')
+    const inputRef = useRef()
+
+    const onClickClear = () => {
+        setSearchValue('')
+        setCurrentValue('');
+        inputRef.current.focus()
+    }
+
+    const onChangeValue = (e) => {
+        setCurrentValue(e.target.value);
+        debounceSearchValue(e.target.value)
+    }
+
+    const debounceSearchValue = useCallback(
+        debounce(value => setSearchValue(value), 500)
+    , [])
+
+
+
     return (
         <div className={styles.root}>
             <svg
@@ -13,15 +34,16 @@ function Search({ searchValue, setSearchValue }) {
                 <path d="M27.414 24.586l-5.077-5.077A9.932 9.932 0 0024 14c0-5.514-4.486-10-10-10S4 8.486 4 14s4.486 10 10 10a9.932 9.932 0 005.509-1.663l5.077 5.077a2 2 0 102.828-2.828zM7 14c0-3.86 3.14-7 7-7s7 3.14 7 7-3.14 7-7 7-7-3.14-7-7z"></path>
             </svg>
             <input
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                ref={inputRef}
+                value={currentValue}
+                onChange={onChangeValue}
                 type="text"
                 className={styles.input}
             />
-            {searchValue && (
+            {currentValue && (
                 <svg
                     className={styles.clear}
-                    onClick={() => setSearchValue('')}
+                    onClick={onClickClear}
                     xmlns="http://www.w3.org/2000/svg"
                     width="512"
                     height="512"
