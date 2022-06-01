@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { setSortType } from '../redux/slice/sortSlice'
 
-function Sort( {sortType, setSortType}) {
+const sortList = [{name:'популярности', value: 'rating'}, {name: 'цене', value: "price"}, {name: 'алфавиту', value: 'title'}];
+
+function Sort() {
+    const dispatch = useDispatch()
+    const sortType = useSelector(state => state.sortReducer.sortType)
     const [open, setOpen] = useState(false);
-    const sortList = [{name:'популярности', value: 'rating'}, {name: 'цене', value: "price"}, {name: 'алфавиту', value: 'title'}];
-
     const onSelectSortType = (i) => {
-        setSortType(i);
+        dispatch(setSortType(i))
         setOpen(false);
     };
 
