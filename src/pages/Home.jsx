@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 function Home({searchValue, setSearchValue}) {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    // const [sortType, setSortType] = useState({ name: 'популярности', value: 'popularity' });
     const sortType = useSelector(state => state.sortReducer.sortType)
     const [activeCategory, setActiveCategory] = React.useState(0);
     const category = activeCategory > 0 ? '&category=' + activeCategory : '';
